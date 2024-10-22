@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        speedX = Input.GetAxisRaw("Horizontal") * moveSpeed;
-        speedY = Input.GetAxisRaw("Vertical") * moveSpeed;
+        speedX = Input.GetAxisRaw("Horizontal");
+        speedY = Input.GetAxisRaw("Vertical");
         timer += Time.deltaTime;
 
         if (timer > fireRate)
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(speedX, speedY);
+        rb.velocity = new Vector2(speedX, speedY).normalized * moveSpeed;
     }
 
     private void Fire()

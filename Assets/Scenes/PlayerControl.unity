@@ -431,6 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bca0459b119ee848bec8625fe318e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolAmount: 20
   bulletPrefab: {fileID: 2225513794557360967, guid: 3b3aa4679a6ed5b4ba2b5e2217349982, type: 3}
 --- !u!4 &1253943253
 Transform:
@@ -535,6 +536,10 @@ PrefabInstance:
     - target: {fileID: 771567376588743461, guid: 5c444a3794e602b408bcbbf5b1c69f5f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2158456175526272546, guid: 5c444a3794e602b408bcbbf5b1c69f5f, type: 3}
+      propertyPath: fireRate
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7236085118672842488, guid: 5c444a3794e602b408bcbbf5b1c69f5f, type: 3}
       propertyPath: m_LocalPosition.x
