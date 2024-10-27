@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float defaultFireRate = 1f;
-    private float fireRate = 1f;
+    public float fireRate = 1f;
     public int health = 3;
 
     private float timer = 0;
