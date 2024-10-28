@@ -5,22 +5,21 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
-    public Text speedText;
+    public GameObject Player;
     public Text healthText;
-    public Text fireRateText;
+    public Text scoreText;
 
+    
     private Player player;
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = Player.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
         healthText.text = "Health: " + player.health.ToString();
-        speedText.text = "Speed: " + player.moveSpeed.ToString("F2");
-        fireRateText.text = "Fire Rate: " + player.fireRate.ToString("F2");
     }
 }
