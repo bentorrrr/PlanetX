@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     public float defaultFireRate = 1f;
     public float fireRate = 1f;
     public int health = 3;
-    public float rotationSpeed = 5f;
 
 	private float timer = 0;
     private float speedX, speedY;
