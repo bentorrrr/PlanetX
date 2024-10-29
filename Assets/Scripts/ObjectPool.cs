@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour
     private List<GameObject> pool = new List<GameObject>();
     
     [SerializeField] private int poolAmount = 20;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject prefab;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class ObjectPool : MonoBehaviour
     {
         for (int i = 0; i < poolAmount; i++)
         {
-            GameObject obj = Instantiate(bulletPrefab);
+            GameObject obj = Instantiate(prefab);
             obj.SetActive(false);
             pool.Add(obj);
         }
