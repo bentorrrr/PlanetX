@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float defaultFireRate = 1f;
     public float fireRate = 1f;
     public int health = 3;
     public float rotationSpeed = 5f;
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        fireRate = defaultFireRate;
         rb = GetComponent<Rigidbody2D>();
         sp = GetComponentInChildren<SpriteRenderer>();
 	}
@@ -46,6 +49,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetFireRate(float rate)
+    {
+        StartCoroutine(FireRatePowerUp(rate));
+    }
+
+    public void SetSpeed(float rate)
+    {
+        StartCoroutine(SpeedPowerUp(rate));
+    }
+
     private void Move(Vector2 movement)
     {
         Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
@@ -64,6 +77,22 @@ public class Player : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, min.y, max.y);
 
         transform.position = pos;
+    }
+    
+    private IEnumerator SpeedPowerUp(float speedMultiplier)
+    {
+        moveSpeed*=speedMultiplier;
+        yield return new WaitForSeconds(5);
+        moveSpeed/=speedMultiplier;
+        Debug.Log("SpeedPowerUpEnd");
+    }
+
+    private IEnumerator FireRatePowerUp(float rate)
+    {
+        fireRate = defaultFireRate / rate;
+        yield return new WaitForSeconds(5);
+        fireRate = defaultFireRate;
+        Debug.Log("FireRatePowerUpEnd");
     }
 
     private void Fire()
