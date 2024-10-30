@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
 	public GameObject speedUpPrefab;
 	public GameObject rateUpPrefab;
-    public int powerUpTarget;
+
+	public GameObject defaultBulletPrefab;
+	public GameObject upgradedBulletPrefab;
+    private GameObject shootingBullet;
+    private GameObject defaultEngine;
+    private GameObject speedEngine;
+
+	public int powerUpTarget;
 
 	public float moveSpeed = 5f;
     public float defaultFireRate = 0.3f;
@@ -17,8 +23,9 @@ public class Player : MonoBehaviour
 
 	private float timer = 0;
     private float speedX, speedY;
+	private bool canControl = false;
 
-    public Color flashColor;
+	public Color flashColor;
     public Color regularColor;
 	public float flashDuration = 0.1f;
     public int numberOfFlashes = 5;
@@ -26,20 +33,41 @@ public class Player : MonoBehaviour
 
 	private int killCount = 0;
 
+	private Collider2D col;
 	private Rigidbody2D rb;
-    private SpriteRenderer sp;
-    [SerializeField] private Transform bulletPosition;
+	private SpriteRenderer sp;
+	[SerializeField] private WaveSpawner waveSpawner;
+	[SerializeField] private Transform bulletPosition;
 
-    void Start()
+	[SerializeField] private ParticleSystem destroyedParticle;
+	private ParticleSystem destroyedParticleInstance;
+
+	public Transform offscreenStartPosition;
+	public Transform onscreenPosition;
+	public float entrySpeed = 5f;
+
+	void Start()
     {
         fireRate = defaultFireRate;
-        rb = GetComponent<Rigidbody2D>();
+        shootingBullet = defaultBulletPrefab;
+		defaultEngine = transform.Find("DefaultEngine").gameObject;
+		speedEngine = transform.Find("SpeedEngine").gameObject;
+		transform.position = offscreenStartPosition.position;
+
+		waveSpawner = GameObject.FindObjectOfType<WaveSpawner>();
+		rb = GetComponent<Rigidbody2D>();
         sp = GetComponentInChildren<SpriteRenderer>();
+		col = GetComponent<Collider2D>();
+
+		waveSpawner.gameObject.SetActive(false);
+		StartCoroutine(EnterGameCoroutine());
 	}
 
     void Update()
     {
-        speedX = Input.GetAxisRaw("Horizontal");
+		if (!canControl) return;
+
+		speedX = Input.GetAxisRaw("Horizontal");
         speedY = Input.GetAxisRaw("Vertical");
         Vector2 movement = new Vector2(speedX, speedY).normalized;
         Move(movement);
@@ -86,28 +114,28 @@ public class Player : MonoBehaviour
     private IEnumerator SpeedPowerUp(float speedMultiplier)
     {
         moveSpeed*=speedMultiplier;
-        yield return new WaitForSeconds(5);
-        moveSpeed/=speedMultiplier;
+        speedEngine.SetActive(true);
+        defaultEngine.SetActive(false);
+		yield return new WaitForSeconds(5);
+		speedEngine.SetActive(false);
+		defaultEngine.SetActive(true);
+		moveSpeed /=speedMultiplier;
         Debug.Log("SpeedPowerUpEnd");
     }
 
     private IEnumerator FireRatePowerUp(float rate)
     {
         fireRate = defaultFireRate / rate;
-        yield return new WaitForSeconds(5);
-        fireRate = defaultFireRate;
+        shootingBullet = upgradedBulletPrefab;
+		yield return new WaitForSeconds(5);
+		shootingBullet = defaultBulletPrefab;
+		fireRate = defaultFireRate;
         Debug.Log("FireRatePowerUpEnd");
     }
 
     private void Fire()
     {
-        GameObject bullet = ObjectPool.instance.GetPool();
-
-        if (bullet != null)
-        {
-            bullet.transform.position = bulletPosition.position;
-            bullet.SetActive(true);
-        }
+        GameObject bullet = Instantiate(shootingBullet, bulletPosition.position, Quaternion.identity);
     }
 
 	public void TakeDamage(int damage)
@@ -117,9 +145,17 @@ public class Player : MonoBehaviour
 		health -= damage;
 		if (health <= 0)
 		{
+			canControl = false;
+			defaultEngine.SetActive(false);
+			sp.color = new Color(0, 0, 0, 0);
+			col.enabled = false;
+			StartCoroutine(SpawnDestroyedParticles());
 			Debug.LogError("Player has been defeated.");
 		}
-		StartCoroutine(IFrames());
+		else
+		{
+			StartCoroutine(IFrames());
+		}
 	}
 
 	private IEnumerator IFrames()
@@ -145,15 +181,28 @@ public class Player : MonoBehaviour
             float randYPos = Random.Range(-4.5f, 4.5f);
             Vector3 spawnPos = new Vector3(11, randYPos, 0);
             if (randPower == 0)
-            {
+			{
+				Debug.LogWarning("Spawn PowerUP");
 				Instantiate(speedUpPrefab, spawnPos, Quaternion.identity);
 			}
             else if (randPower == 1)
-            {
+			{
+				Debug.LogWarning("Spawn PowerUP");
 				Instantiate(rateUpPrefab, spawnPos, Quaternion.identity);
 			}
-			Debug.LogWarning("Spawn PowerUP");
 		}
+	}
+	private IEnumerator EnterGameCoroutine()
+	{
+		float step = entrySpeed * Time.deltaTime;
+		while (Vector2.Distance(transform.position, onscreenPosition.position) > 0.1f)
+		{
+			transform.position = Vector2.MoveTowards(transform.position, onscreenPosition.position, step);
+			yield return null;
+		}
+		transform.position = onscreenPosition.position;
+		canControl = true;
+		waveSpawner.gameObject.SetActive(true);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -161,6 +210,21 @@ public class Player : MonoBehaviour
 		if (collision.gameObject.CompareTag("Enemy"))
 		{
 			TakeDamage(1);
+		}
+	}
+
+	private IEnumerator SpawnDestroyedParticles()
+	{
+        for (int i = 0; i < 20; i++)
+        {
+			float randInterval = Random.Range(0.05f, 0.25f);
+			yield return new WaitForSeconds(randInterval);
+			Vector3 randomOffset = new Vector3(
+				Random.Range(-1f, 1f),
+				Random.Range(-1f, 1f),
+				Random.Range(-1f, 1f)
+			);
+			destroyedParticleInstance = Instantiate(destroyedParticle, transform.position + randomOffset, Quaternion.identity);
 		}
 	}
 }

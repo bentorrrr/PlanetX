@@ -32,10 +32,10 @@ public class PowerUps : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Triggered");
         if (collision.gameObject.CompareTag("Player"))
-        {
-            switch (type)
+		{
+			Debug.Log("Triggered");
+			switch (type)
             {
                 case PowerUpType.Speed:
                     player.GetComponent<Player>().SetSpeed(speedMultiplier);
