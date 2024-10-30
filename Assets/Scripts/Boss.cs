@@ -15,9 +15,12 @@ public class Boss : MonoBehaviour
 	public Color regularColor;
 	public float flashDuration = 0.1f;
 	public int numberOfFlashes = 1;
-
-	public List<GameObject> bulletPosition = new List<GameObject>();
+    public List<GameObject> bulletPosition = new List<GameObject>();
+    public GameObject Phase1Engine;
+    public GameObject Phase2Engine;
     private SpriteRenderer sp;
+	[SerializeField] private ParticleSystem destroyedParticle;
+	private ParticleSystem destroyedParticleInstance;
 
     private Animator anim;
     public Slider healthSlider;
@@ -56,13 +59,16 @@ public class Boss : MonoBehaviour
         {
             anim.SetTrigger("StageTwo");
             sp.color = Color.red;
+            Phase1Engine.SetActive(false);
+            Phase2Engine.SetActive(true);
         }
 
         if (health <= 0)
         {
             anim.SetTrigger("Death");
-            healthSlider.gameObject.SetActive(false);
-            Destroy(this.gameObject);
+            //healthSlider.gameObject.SetActive(false);
+            //Destroy(this.gameObject);
+			StartCoroutine(SpawnDestroyedParticles());
         }
 
         healthSlider.value = health;
@@ -78,9 +84,6 @@ public class Boss : MonoBehaviour
 		{
 			Player player = FindObjectOfType<Player>();
             player.IncrementDestroyedEnemyCount();
-            WaveSpawner waveSpawner = FindObjectOfType<WaveSpawner>();
-            waveSpawner.SomeoneIsKilled();
-            Destroy(gameObject);
         }
 		StartCoroutine(IFlash());
 	}
@@ -130,4 +133,24 @@ public class Boss : MonoBehaviour
 		healthSlider.gameObject.SetActive(true);
 		isActive = true;
 	}
+	
+	private IEnumerator SpawnDestroyedParticles()
+	{
+        for (int i = 0; i < 5; i++)
+        {
+			float randInterval = Random.Range(0.2f, 0.3f);
+			yield return new WaitForSeconds(randInterval);
+			Vector3 randomOffset = new Vector3(
+				Random.Range(-1f, 1f),
+				Random.Range(-1f, 1f),
+				Random.Range(-1f, 1f)
+			);
+			destroyedParticleInstance = Instantiate(destroyedParticle, transform.position + randomOffset, Quaternion.identity);
+		}
+        
+        healthSlider.gameObject.SetActive(false);
+        Destroy(this.gameObject);
+	}
+
+
 }
