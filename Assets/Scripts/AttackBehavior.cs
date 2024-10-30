@@ -29,8 +29,6 @@ public class AttackBehavior : StateMachineBehaviour
             timer -= Time.deltaTime;
         }
 
-        animator.GetComponent<Boss>().Fire();
-
         animator.transform.position = Vector2.MoveTowards(animator.transform.position, target, speed * Time.deltaTime);
     }
 

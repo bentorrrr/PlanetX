@@ -65,18 +65,4 @@ public class Boss : MonoBehaviour
             collision.GetComponent<Player>().TakeDamage(damage);
         }
     }
-
-    public void Fire()
-    {
-        GameObject bullet = ObjectPool.instance.GetPool();
-
-        foreach (Transform t in bullet.transform)
-        {
-            if (bullet != null)
-            {
-                bullet.transform.position = t.position;
-                bullet.SetActive(true);
-            }
-        }
-    }
 }
