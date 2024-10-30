@@ -9,6 +9,9 @@ public class BasicBullet : MonoBehaviour
 	private Vector2 fireDirection = Vector2.right;
 	public int damage = 1;
 
+	[SerializeField] private ParticleSystem hitParticle;
+	private ParticleSystem hitParticleInstance;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -26,13 +29,28 @@ public class BasicBullet : MonoBehaviour
 			Minions enemy = collision.gameObject.GetComponent<Minions>();
 			if (enemy != null)
 			{
+				SpawnHitParticles();
 				enemy.TakeDamage(damage);
+			}
+			Destroy(gameObject);
+		}
+		else if (collision.gameObject.CompareTag("Boss"))
+		{
+			Boss boss = collision.gameObject.GetComponent<Boss>();
+			if (boss != null)
+			{
+				boss.TakeDamage(damage);
 			}
 			gameObject.SetActive(false);
 		}
 		else if (collision.gameObject.CompareTag("Wall"))
 		{
-			gameObject.SetActive(false);
+			Destroy(gameObject);
 		}
+	}
+
+	private void SpawnHitParticles()
+	{
+		hitParticleInstance = Instantiate(hitParticle, transform.position, Quaternion.identity);
 	}
 }
