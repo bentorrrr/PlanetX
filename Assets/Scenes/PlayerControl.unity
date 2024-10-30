@@ -772,7 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolAmount: 20
-  bulletPrefab: {fileID: 2225513794557360967, guid: 3b3aa4679a6ed5b4ba2b5e2217349982, type: 3}
+  prefab: {fileID: 0}
 --- !u!4 &1253943253
 Transform:
   m_ObjectHideFlags: 0
@@ -1227,11 +1227,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5594104601034899439, guid: f464172eefa5e98488d8b5967a11ecb8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.02
+      value: 11.13
       objectReference: {fileID: 0}
     - target: {fileID: 5594104601034899439, guid: f464172eefa5e98488d8b5967a11ecb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.753
+      value: 4.98
       objectReference: {fileID: 0}
     - target: {fileID: 5594104601034899439, guid: f464172eefa5e98488d8b5967a11ecb8, type: 3}
       propertyPath: m_LocalPosition.z
