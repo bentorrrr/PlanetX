@@ -34,6 +34,15 @@ public class BasicBullet : MonoBehaviour
 			}
 			Destroy(gameObject);
 		}
+		else if (collision.gameObject.CompareTag("Boss"))
+		{
+			Boss boss = collision.gameObject.GetComponent<Boss>();
+			if (boss != null)
+			{
+				boss.TakeDamage(damage);
+			}
+			gameObject.SetActive(false);
+		}
 		else if (collision.gameObject.CompareTag("Wall"))
 		{
 			Destroy(gameObject);
