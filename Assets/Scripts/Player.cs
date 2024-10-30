@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float defaultFireRate = 1f;
-    public float fireRate = 1f;
+
+	public GameObject speedUpPrefab;
+	public GameObject rateUpPrefab;
+    public int powerUpTarget;
+
+	public float moveSpeed = 5f;
+    public float defaultFireRate = 0.3f;
+    public float fireRate = 0.3f;
     public int health = 3;
 
 	private float timer = 0;
@@ -134,9 +139,20 @@ public class Player : MonoBehaviour
 	public void IncrementDestroyedEnemyCount()
 	{
 		killCount++;
-		if (killCount % 20 == 0)
+		if (killCount % powerUpTarget == 0)
 		{
-            Debug.LogWarning("Spawn PowerUP");
+            int randPower = Random.Range(0, 2);
+            float randYPos = Random.Range(-4.5f, 4.5f);
+            Vector3 spawnPos = new Vector3(11, randYPos, 0);
+            if (randPower == 0)
+            {
+				Instantiate(speedUpPrefab, spawnPos, Quaternion.identity);
+			}
+            else if (randPower == 1)
+            {
+				Instantiate(rateUpPrefab, spawnPos, Quaternion.identity);
+			}
+			Debug.LogWarning("Spawn PowerUP");
 		}
 	}
 

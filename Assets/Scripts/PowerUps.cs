@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using UnityEngine;
 
 public class PowerUps : MonoBehaviour
@@ -11,18 +12,25 @@ public class PowerUps : MonoBehaviour
         BulletSize,
     }
 
-    public PowerUpType type;
+	private Rigidbody2D rb;
+    public float floatSpeed = 5f;
+	public PowerUpType type;
     public float fireRateDivider = 2f;
     public float bulletSizeMultiplier = 2f;
     public float speedMultiplier = 2f;
     private GameObject player;
     void Start()
-    {
-        if (type == PowerUpType.Speed || type == PowerUpType.FireRate)
+	{
+		rb = GetComponent<Rigidbody2D>();
+		if (type == PowerUpType.Speed || type == PowerUpType.FireRate)
             player = GameObject.FindGameObjectWithTag("Player");
     }
+	private void FixedUpdate()
+	{
+		rb.velocity = -(Vector2.right * floatSpeed);
+	}
 
-    void OnTriggerEnter2D(Collider2D collision)
+	void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Triggered");
         if (collision.gameObject.CompareTag("Player"))
