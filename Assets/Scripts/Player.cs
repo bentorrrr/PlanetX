@@ -192,6 +192,7 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
+
 	private IEnumerator EnterGameCoroutine()
 	{
 		float step = entrySpeed * Time.deltaTime;

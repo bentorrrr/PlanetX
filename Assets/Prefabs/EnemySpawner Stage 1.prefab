@@ -9,12 +9,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3433465867933723771, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
+      propertyPath: bossPrefab
+      value: 
+      objectReference: {fileID: 7065982671138013876, guid: 08276520a73851145ac81775b74489ee, type: 3}
+    - target: {fileID: 3433465867933723771, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
+      propertyPath: spawnInterval
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433465867933723771, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3433465867933723771, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
+      propertyPath: bossHealthBarCanvas
+      value: 
+      objectReference: {fileID: 1770019947038653728, guid: 1f15829444c225345bbd6582c66a461b, type: 3}
     - target: {fileID: 7338003890334816195, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
       propertyPath: m_Name
-      value: EnemySpawner Variant
+      value: EnemySpawner Stage 1
       objectReference: {fileID: 0}
     - target: {fileID: 8990569278350940332, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
       propertyPath: m_LocalPosition.x
