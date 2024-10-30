@@ -48,10 +48,7 @@ public class WaveSpawner : MonoBehaviour
 		if (waveTimer <= 0)
 		{
 			currentWave++;
-            if (currentWave <= maxWave)
-            {
-				GenerateWave();
-			}
+            GenerateWave();
 		}
 	}
 
@@ -59,7 +56,7 @@ public class WaveSpawner : MonoBehaviour
     {
         int randSpawnId = 0;
 
-		if (currentWave < 5)
+		if (currentWave <= 5)
 		{
 			randSpawnId = Random.Range(0, 9);
 		}
@@ -102,9 +99,17 @@ public class WaveSpawner : MonoBehaviour
 
     public void GenerateWave()
     {
-		currentWaveValue = currentWave * waveValMulti;
+		if (currentWave <= maxWave)
+		{
+			currentWaveValue = currentWave * waveValMulti;
+		}
+        else
+        {
+			currentWaveValue = (maxWave / 2) * waveValMulti;
+		}
         waveValue = currentWaveValue;
-        GenerateEnemy();
+		
+		GenerateEnemy();
         waveTimer = waveDuration;
     }
 

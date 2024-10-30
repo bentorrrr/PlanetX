@@ -9,6 +9,9 @@ public class BasicEnemyBullet : MonoBehaviour
 	private Vector2 fireDirection = Vector2.right;
 	public int damage = 1;
 
+	[SerializeField] private ParticleSystem hitParticle;
+	private ParticleSystem hitParticleInstance;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -39,5 +42,10 @@ public class BasicEnemyBullet : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	private void SpawnHitParticles()
+	{
+		hitParticleInstance = Instantiate(hitParticle, transform.position, Quaternion.identity);
 	}
 }

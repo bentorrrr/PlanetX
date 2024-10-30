@@ -16,6 +16,9 @@ public class Minions : MonoBehaviour
 	public float flashDuration = 0.1f;
 	public int numberOfFlashes = 1;
 
+	[SerializeField] private ParticleSystem destroyedParticle;
+	private ParticleSystem destroyedParticleInstance;
+
 	void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +44,7 @@ public class Minions : MonoBehaviour
 		health -= damage;
 		if (health <= 0)
 		{
+			SpawnDestroyedParticles();
 			Player player = FindObjectOfType<Player>();
 			player.IncrementDestroyedEnemyCount();
 			WaveSpawner waveSpawner = FindObjectOfType<WaveSpawner>();
@@ -61,5 +65,10 @@ public class Minions : MonoBehaviour
 			yield return new WaitForSeconds(flashDuration);
 			flash++;
 		}
+	}
+
+	private void SpawnDestroyedParticles()
+	{
+		destroyedParticleInstance = Instantiate(destroyedParticle, transform.position, Quaternion.identity);
 	}
 }
