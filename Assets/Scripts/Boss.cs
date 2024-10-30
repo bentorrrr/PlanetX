@@ -11,7 +11,7 @@ public class Boss : MonoBehaviour
     private bool isDead;
 
     public List<GameObject> bulletPosition = new List<GameObject>();
-
+    private SpriteRenderer sp;
 
 
     private Animator anim;
@@ -20,6 +20,7 @@ public class Boss : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        sp = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -28,12 +29,15 @@ public class Boss : MonoBehaviour
         if (health <= 25)
         {
             anim.SetTrigger("StageTwo");
+            sp.color = Color.red;
         }
 
         if (health <= 0)
         {
             anim.SetTrigger("Death");
+            healthSlider.gameObject.SetActive(false);
             Destroy(this.gameObject);
+            
         }
 
         healthSlider.value = health;

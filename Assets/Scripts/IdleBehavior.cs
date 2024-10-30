@@ -25,12 +25,11 @@ public class IdleBehavior : StateMachineBehaviour
         {
             timer -= Time.deltaTime;
 
+            // Can you help me fix this to rotate follow the player 360 degrees? right now it only follows the player only around 180 degress and then it flips backwardsVector3 
+            Vector3 relativePos = Player.transform.position - animator.transform.position;
+            float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
+            animator.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f);
 
-            //Vector3 relativePos = Player.transform.position - animator.transform.position;
-            //Quaternion rotation = Quaternion.LookRotation(relativePos);
-            //rotation.x = animator.transform.rotation.x;
-            //rotation.y = animator.transform.rotation.y;
-            //animator.transform.rotation = rotation;
         }
     }
 

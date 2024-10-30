@@ -542,11 +542,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1249782566}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1770019947038653728, guid: 1f15829444c225345bbd6582c66a461b, type: 3}
       propertyPath: m_Name
       value: BossCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770019947038653728, guid: 1f15829444c225345bbd6582c66a461b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6263457637259587424, guid: 1f15829444c225345bbd6582c66a461b, type: 3}
       propertyPath: m_Pivot.x
@@ -962,12 +966,11 @@ Transform:
   m_GameObject: {fileID: 1249782563}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1034.1287, y: -930.2023, z: 0}
+  m_LocalPosition: {x: 6.81, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2080075180}
-  - {fileID: 1023704162}
   - {fileID: 1087123280}
   - {fileID: 1447682275}
   - {fileID: 403693877}
@@ -1830,4 +1833,5 @@ SceneRoots:
   - {fileID: 1347456675}
   - {fileID: 797184247}
   - {fileID: 1186856169}
+  - {fileID: 1023704161}
   - {fileID: 1249782566}
