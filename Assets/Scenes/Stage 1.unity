@@ -197,10 +197,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1589395433049835353, guid: 08276520a73851145ac81775b74489ee, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5369953103491615587, guid: 08276520a73851145ac81775b74489ee, type: 3}
       propertyPath: m_SortingLayer
       value: 5
@@ -212,10 +208,6 @@ PrefabInstance:
     - target: {fileID: 7065982671138013876, guid: 08276520a73851145ac81775b74489ee, type: 3}
       propertyPath: m_Name
       value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 7065982671138013876, guid: 08276520a73851145ac81775b74489ee, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7501743948252711082, guid: 08276520a73851145ac81775b74489ee, type: 3}
       propertyPath: healthSlider
