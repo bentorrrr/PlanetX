@@ -39,6 +39,7 @@ public class BasicBullet : MonoBehaviour
 			Boss boss = collision.gameObject.GetComponent<Boss>();
 			if (boss != null)
 			{
+				SpawnHitParticles();
 				boss.TakeDamage(damage);
 			}
 			gameObject.SetActive(false);
