@@ -28,6 +28,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f; // Resume game
+        FindObjectOfType<AudioManager>().ResumeMusic();
         isPaused = false;
     }
 
@@ -35,6 +36,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f; // Freeze game
+        FindObjectOfType<AudioManager>().PauseMusic();
         isPaused = true;
     }
 

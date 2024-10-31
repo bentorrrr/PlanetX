@@ -155,6 +155,7 @@ public class Player : MonoBehaviour
 		health -= damage;
 		if (health <= 0)
         {
+            FindObjectOfType<AudioManager>().StopMusic();
             audioManager.PlaySFX(audioManager.PlayerDeath);
             StartCoroutine(HandlePlayerDeath());
         }

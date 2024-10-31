@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("--------- Audio Source ---------")]
     public AudioClip background;
+    public AudioClip GameOver;
     public AudioClip PlayerDamage;
     public AudioClip PlayerShoot;
     public AudioClip PlayerDeath;
@@ -27,5 +28,19 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         SFXSource.PlayOneShot(clip);
+    }
+    public void PauseMusic()
+    {
+        musicSource.Pause();
+    }
+
+    public void ResumeMusic()
+    {
+        musicSource.UnPause();
+    }
+
+    public void StopMusic()
+    {
+        musicSource.Stop();
     }
 }
