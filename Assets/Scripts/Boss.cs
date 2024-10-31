@@ -48,7 +48,7 @@ public class Boss : MonoBehaviour
 
 	void Update()
 	{
-		if (!isActive) return;
+		if (isActive == false) return;
 
 		if (health <= 50)
 		{
@@ -79,7 +79,7 @@ public class Boss : MonoBehaviour
 
 	public void TakeDamage(int damage)
 	{
-		if (!isActive) return;
+		if (isActive == false) return;
 
 		health -= damage;
 		Debug.Log("Taking Damage" + health);
@@ -115,7 +115,7 @@ public class Boss : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (!isActive || isDead) return;
+		if (isActive == false || isDead) return;
 
 		if (collision.CompareTag("Player"))
 		{
@@ -125,7 +125,7 @@ public class Boss : MonoBehaviour
 
 	public void ActivateBoss()
 	{
-		if (!isActive)
+		if (isActive == false)
 		{
 			StartCoroutine(BossEnterCoroutine());
 		}
@@ -138,7 +138,7 @@ public class Boss : MonoBehaviour
 		while (Vector2.Distance(transform.position, onscreenPosition.position) > 0.1f)
 		{
 			transform.position = Vector2.MoveTowards(transform.position, onscreenPosition.position, step);
-			yield return new WaitForSeconds(5f);
+			yield return new WaitForSecondsRealtime(5f);
 		}
 
 		transform.position = onscreenPosition.position;
