@@ -10,6 +10,9 @@ TagManager:
   - PlayerBullet
   - Enemy
   - Boss
+  - Planet
+  - GameOverMenu
+  - Audio
   layers:
   - Default
   - TransparentFX
