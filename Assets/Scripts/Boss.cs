@@ -31,11 +31,16 @@ public class Boss : MonoBehaviour
 	public Transform onscreenPosition;
 	public float entrySpeed = 5f;
 
-	private WaveSpawner waveSpawner;
+	public WaveSpawner waveSpawner;
 
-	void Start()
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    void Start()
 	{
-		waveSpawner = GameObject.FindObjectOfType<WaveSpawner>();
 		anim = GetComponent<Animator>();
 		sp = GetComponentInChildren<SpriteRenderer>();
 		if (sp == null)
@@ -82,7 +87,9 @@ public class Boss : MonoBehaviour
 		if (isActive == false) return;
 
 		health -= damage;
-		Debug.Log("Taking Damage" + health);
+        audioManager.PlaySFX(audioManager.BossHit);
+
+        Debug.Log("Taking Damage" + health);
 
 		if (!isFlashing)
 		{

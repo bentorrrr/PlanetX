@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     public float fireRate = 0.3f;
     public int health = 3;
 
-	private float timer = 0;
+    private float timer = 0;
     private float speedX, speedY;
 	private bool canControl = false;
 
@@ -46,7 +46,14 @@ public class Player : MonoBehaviour
 	public Transform onscreenPosition;
 	public float entrySpeed = 5f;
 
-	void Start()
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    void Start()
     {
         fireRate = defaultFireRate;
         shootingBullet = defaultBulletPrefab;
@@ -113,6 +120,7 @@ public class Player : MonoBehaviour
     
     private IEnumerator SpeedPowerUp(float speedMultiplier)
     {
+        audioManager.PlaySFX(audioManager.PlayerUpgrade);
         moveSpeed*=speedMultiplier;
         speedEngine.SetActive(true);
         defaultEngine.SetActive(false);
@@ -125,6 +133,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator FireRatePowerUp(float rate)
     {
+        audioManager.PlaySFX(audioManager.PlayerUpgrade);
         fireRate = defaultFireRate / rate;
         shootingBullet = upgradedBulletPrefab;
 		yield return new WaitForSeconds(5);
@@ -135,6 +144,7 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
+        audioManager.PlaySFX(audioManager.PlayerShoot);
         GameObject bullet = Instantiate(shootingBullet, bulletPosition.position, Quaternion.identity);
     }
 
@@ -144,21 +154,36 @@ public class Player : MonoBehaviour
 
 		health -= damage;
 		if (health <= 0)
-		{
-			canControl = false;
-			defaultEngine.SetActive(false);
-			sp.color = new Color(0, 0, 0, 0);
-			col.enabled = false;
-			StartCoroutine(SpawnDestroyedParticles());
-			Debug.LogError("Player has been defeated.");
-		}
-		else
-		{
+        {
+            FindObjectOfType<AudioManager>().StopMusic();
+            audioManager.PlaySFX(audioManager.PlayerDeath);
+            StartCoroutine(HandlePlayerDeath());
+        }
+        else
+        {
 			StartCoroutine(IFrames());
 		}
 	}
 
-	private IEnumerator IFrames()
+    private IEnumerator HandlePlayerDeath()
+    {
+        GameOverMenu gameOverMenu = FindObjectOfType<GameOverMenu>();
+        if (gameOverMenu != null)
+        {
+            gameOverMenu.ShowGameOver(); 
+        }
+
+        canControl = false;
+        defaultEngine.SetActive(false);
+        sp.color = new Color(0, 0, 0, 0); 
+        col.enabled = false;
+
+        yield return new WaitForSeconds(1f); 
+        Destroy(gameObject);
+        StartCoroutine(SpawnDestroyedParticles());
+    }
+
+    private IEnumerator IFrames()
 	{
         int flash = 0;
 		isInvincible = true;
@@ -210,7 +235,8 @@ public class Player : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Enemy"))
 		{
-			TakeDamage(1);
+            audioManager.PlaySFX(audioManager.PlayerDamage);
+            TakeDamage(1);
 		}
 	}
 
