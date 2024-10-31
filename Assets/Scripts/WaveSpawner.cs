@@ -13,26 +13,59 @@ public class WaveSpawner : MonoBehaviour
 	public List<GameObject> enemiesToSpawn = new List<GameObject>();
 	public int spawnedEnemiesCount = 0;
 
+	public bool bossFifty;
+
 	public List<Transform> spawnLocations = new List<Transform>();
     public int waveDuration = 10;
     public float spawnInterval = 0.5f;
 
-	[SerializeField] private float waveTimer;
-	[SerializeField] private float spawnTimer;
+	public GameObject bossPrefab;
+    public GameObject bossHealthBarCanvas;
+	public Transform bossSpawnLocation;
+	private Boss bossInstance;
 
-    void Start()
+	[SerializeField] private float waveTimer;
+	[SerializeField] public float spawnTimer;
+
+	void Start()
     {
-        GenerateWave();
+		bossFifty = false;
+		bossInstance = FindObjectOfType<Boss>();
+		bossInstance.gameObject.SetActive(false);
+		GenerateWave();
     }
 
     void FixedUpdate()
     {
-        if (spawnTimer <= 0)
+		if (currentWave >= maxWave)
+		{
+			if (spawnedEnemiesCount <= 0)
+			{
+				ActiveBoss();
+			}
+		}
+
+		if (spawnTimer <= 0)
         {
             if (enemiesToSpawn.Count > 0)
             {
-                EnemySpawn();
-                spawnTimer = spawnInterval;
+				if (currentWave < maxWave)
+				{
+					EnemySpawn();
+					spawnTimer = spawnInterval;
+				}
+				else
+				{
+					if (bossFifty)
+					{
+						EnemySpawn();
+						if (enemiesToSpawn.Count > 0)
+						{
+							EnemySpawn();
+						}
+						spawnTimer = spawnInterval;
+					}
+				}
             }
 			else
 			{
@@ -105,6 +138,7 @@ public class WaveSpawner : MonoBehaviour
 		}
         else
         {
+            spawnInterval = 3f;
 			currentWaveValue = (maxWave / 2) * waveValMulti;
 		}
         waveValue = currentWaveValue;
@@ -134,6 +168,13 @@ public class WaveSpawner : MonoBehaviour
         enemiesToSpawn.Clear();
         enemiesToSpawn = generatedEnemies;
     }
+
+	public void ActiveBoss()
+	{
+		bossInstance.gameObject.SetActive(true);
+		bossInstance.ActivateBoss();
+	}
+
 }
 
 [System.Serializable]
