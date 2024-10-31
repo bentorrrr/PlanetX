@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    public string PlayerControl;
+    public string StageSelector;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +13,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void NewGame()
     {
-        SceneManager.LoadScene("PlayerControl");
+        SceneManager.LoadScene(StageSelector);
     }
     public void Continue()
     {
