@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3433465867933723771, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
+      propertyPath: maxWave
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433465867933723771, guid: bfa4a54dbcbc59d448d146eeffd7b25e, type: 3}
       propertyPath: bossPrefab
       value: 
       objectReference: {fileID: 7065982671138013876, guid: 08276520a73851145ac81775b74489ee, type: 3}

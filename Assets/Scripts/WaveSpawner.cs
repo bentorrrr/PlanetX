@@ -59,7 +59,10 @@ public class WaveSpawner : MonoBehaviour
 					if (bossFifty)
 					{
 						EnemySpawn();
-						EnemySpawn();
+						if (enemiesToSpawn.Count > 0)
+						{
+							EnemySpawn();
+						}
 						spawnTimer = spawnInterval;
 					}
 				}
