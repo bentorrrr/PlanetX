@@ -13,6 +13,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void NewGame()
     {
+        FindObjectOfType<AudioManager>().StopMusic();
         SceneManager.LoadScene(StageSelector);
     }
     public void Continue()
