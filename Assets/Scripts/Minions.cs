@@ -16,6 +16,8 @@ public class Minions : MonoBehaviour
 	public float flashDuration = 0.1f;
 	public int numberOfFlashes = 1;
 
+	public int score;
+
 	[SerializeField] private ParticleSystem destroyedParticle;
 	private ParticleSystem destroyedParticleInstance;
 
@@ -47,6 +49,7 @@ public class Minions : MonoBehaviour
 			SpawnDestroyedParticles();
 			Player player = FindObjectOfType<Player>();
 			player.IncrementDestroyedEnemyCount();
+			player.score += score;
 			WaveSpawner waveSpawner = FindObjectOfType<WaveSpawner>();
 			waveSpawner.SomeoneIsKilled();
 			Destroy(gameObject);

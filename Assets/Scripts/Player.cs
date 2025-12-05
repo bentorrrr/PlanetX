@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
 	private bool isInvincible = false;
 
 	private int killCount = 0;
+	public int score = 0;
 
 	private Collider2D col;
 	private Rigidbody2D rb;

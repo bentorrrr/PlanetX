@@ -21,5 +21,6 @@ public class UIScript : MonoBehaviour
     void Update()
     {
         healthText.text = "Health: " + player.health.ToString();
-    }
+        scoreText.text = "Score: " + player.score.ToString();
+	}
 }

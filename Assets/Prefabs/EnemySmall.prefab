@@ -4968,6 +4968,7 @@ MonoBehaviour:
   regularColor: {r: 1, g: 1, b: 1, a: 1}
   flashDuration: 0.1
   numberOfFlashes: 1
+  score: 1
   destroyedParticle: {fileID: 4439100853825987599, guid: 8b4c1062231e72743ac9c109b2c4be68, type: 3}
 --- !u!50 &-2091134544748951134
 Rigidbody2D:
