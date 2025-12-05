@@ -21,7 +21,13 @@ public class Minions : MonoBehaviour
 	[SerializeField] private ParticleSystem destroyedParticle;
 	private ParticleSystem destroyedParticleInstance;
 
-	void Start()
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 		sp = GetComponentInChildren<SpriteRenderer>();
@@ -46,7 +52,8 @@ public class Minions : MonoBehaviour
 		health -= damage;
 		if (health <= 0)
 		{
-			SpawnDestroyedParticles();
+			audioManager.PlaySFX(audioManager.EnemyDeath);
+            SpawnDestroyedParticles();
 			Player player = FindObjectOfType<Player>();
 			player.IncrementDestroyedEnemyCount();
 			player.score += score;
